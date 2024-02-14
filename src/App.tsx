@@ -43,7 +43,7 @@ function App() {
   return (
     <div>
       <div style={{position: 'absolute', left: '20px', top: '20px', zIndex: 1000, background: 'white', padding: '10px', fontWeight: 'bold', fontSize: '20px'}}>
-        幻想マップ
+        幻想マップsample
       </div>
       {showMenu && (
         <div style={{position: 'absolute', left: '20px', bottom: '20px', zIndex: 1000, background: 'white', padding: '10px', display: 'flex', flexDirection: 'column', gap: '10px'}}>
