@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { MapContainer, TileLayer, Marker, Popup, ZoomControl } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup, ZoomControl, useMapEvents } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png';
 import markerIcon from 'leaflet/dist/images/marker-icon.png';
 import markerShadow from 'leaflet/dist/images/marker-shadow.png';
+import MarkerPopup from './lib/MarkerPopup'; 
+import {fetchPins,deletePin,updatePin} from './lib/PinApi'; 
+import PinData from './lib/PinData';
+import {AddPinComponent} from './lib/AddPinComponent'; 
 
 // デフォルトのマーカーアイコンを規定
 L.Icon.Default.mergeOptions({
@@ -13,33 +17,21 @@ L.Icon.Default.mergeOptions({
   shadowUrl: markerShadow,
 });
 
-// マーカーデータの型を規定
-interface MarkerData {
-  id: number;
-  name: string;
-  position: [number, number];
-}
-
-// データ取得できなかった場合のデフォルトデータを規定
-const defaultMarkers: MarkerData[] = [
-  { id: 1, name: 'おれんち', position: [35.6895, 139.6917] },
-  // デフォルトのピン位置を追加
-];
 
 // メインの関数
 function App() {
+  // ピン情報
+  const [pins, setPins] = useState<PinData[]>([]);
+  // メニュー情報
   const [showMenu, setShowMenu] = useState(true);
   const [showMarker, setShowMarker] = useState(true);
-  const [markers, setMarkers] = useState<MarkerData[]>(defaultMarkers);
 
-  // 
+  // ピン情報の取得
   useEffect(() => {
-    fetch('API_URL')
-      .then(response => response.json())
-      .then(data => setMarkers(data))
-      .catch(() => setMarkers(defaultMarkers));
+    fetchPins().then(setPins).catch(console.error);
   }, []);
 
+  // レンダリング用に諸々の処理結果を含んだDOMを返却する
   return (
     <div>
       <div style={{position: 'absolute', left: '20px', top: '20px', zIndex: 1000, background: 'white', padding: '10px', fontWeight: 'bold', fontSize: '20px'}}>
@@ -54,19 +46,19 @@ function App() {
       {!showMenu && (
         <button style={{position: 'absolute', left: '20px', bottom: '20px', zIndex: 1000}} onClick={() => setShowMenu(true)}>メニュー</button>
       )}
-      <MapContainer center={[35.6895, 139.6917]} zoom={13} style={{ height: '100vh', width: '100vw' }} zoomControl={false}>
-        <TileLayer
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
-        <ZoomControl position="topright" />
-        {showMarker && markers.map((marker) => (
-          <Marker key={marker.id} position={marker.position}>
-            <Popup>{marker.name}</Popup>
-          </Marker>
-        ))}
-      </MapContainer>
+    <MapContainer center={[35.6895, 139.6917]} zoom={13} style={{ height: '100vh', width: '100%' }}>
+      <TileLayer
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+      />
+      <AddPinComponent />
+      {pins.map(pin => (
+        <Marker           key={pin.id}
+          position={[pin.latitude, pin.longitude]} >
+          <MarkerPopup pin={pin} updatePin={updatePin} deletePin={deletePin} />
+        </Marker>
+      ))}
+    </MapContainer>
     </div>
   );
-}
-
+} 
 export default App;
