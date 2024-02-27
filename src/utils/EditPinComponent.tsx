@@ -1,9 +1,11 @@
 // 必要なインポート
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState } from 'react';
 import { Popup } from 'react-leaflet';
-import L, { LatLng } from 'leaflet';
 import {updatePin,deletePin} from '../services/PinApi'; 
 import PinData from '../models/PinData';
+import Edit from '@mui/icons-material/Edit';
+import Delete from '@mui/icons-material/Delete';
+import { IconButton, Button, TextField } from '@mui/material';
 
 // PinDataをPropsで受け取るための定義
 interface propIf {
@@ -21,7 +23,6 @@ const EditPinComponent: React.FC<propIf> = ({pin, reload }) => {
   const [editDescription, setEditDescription] = useState(pin.description);
   const [editCategory, setEditCategory] = useState(pin.category);
   const [editImageUrl, setEditImageUrl] = useState(pin.imageUrl);
-  const [position] = useState<LatLng | null>(new L.LatLng(pin.latitude, pin.longitude));
 
   // 初期化
   const handleInit = () => {
@@ -68,27 +69,17 @@ const EditPinComponent: React.FC<propIf> = ({pin, reload }) => {
     setConfirmDelete(true);
   }
 
-  // ポップアップへの参照
-  const popupRef = useRef<L.Popup | null>(null);
-
-  // ポップアップがレンダリングされた後にポップアップを開くための参照を定義
-  useEffect(() => {
-    if (popupRef.current) {
-      popupRef.current.openPopup();
-    }
-  }, [position]);
-
   // 編集ボタン押下後のポップアップ
   if (editMode) {
     return (
-      <Popup ref={popupRef}> 
+      <Popup> 
         <div>
-          <label>タイトル：<input type="text" value={editTitle} onChange={(e) => setEditTitle(e.target.value)} /></label><br/>
-          <label>説明：<textarea value={editDescription} onChange={(e) => setEditDescription(e.target.value)} /></label><br/>
-          <label>カテゴリ：<input type="text" value={editCategory} onChange={(e) => setEditCategory(e.target.value)} /></label><br/>
-          <label>画像URL:<input type="text" value={editImageUrl} onChange={(e) => setEditImageUrl(e.target.value)} /></label><br/>
-          <button onClick={handleUpdate}>保存</button>
-          <button onClick={handleCancel}>キャンセル</button>
+          <label><TextField id="standard-basic" label="タイトル" variant="standard" value={editTitle} onChange={(e) => setEditTitle(e.target.value)} /></label><br/><br/>
+          <label><TextField id="standard-multiline-flexible" label="説明" multiline maxRows={2} variant="standard" value={editDescription} onChange={(e) => setEditDescription(e.target.value)} /></label><br/><br/>
+          <label><TextField id="standard-basic" label="カテゴリ" variant="standard" value={editCategory} onChange={(e) => setEditCategory(e.target.value)} /></label><br/><br/>
+          <label><TextField id="standard-basic" label="画像URL" variant="standard" value={editImageUrl} onChange={(e) => setEditImageUrl(e.target.value)} /></label><br/><br/>
+          <Button variant="outlined" color="success" onClick={handleUpdate}>保存</Button>
+          <Button variant="text" onClick={handleCancel}>キャンセル</Button>
         </div>
       </Popup>
     );
@@ -97,11 +88,11 @@ const EditPinComponent: React.FC<propIf> = ({pin, reload }) => {
   // 削除ボタン押下後のポップアップ
   if (confirmDelete) {
     return (
-      <Popup ref={popupRef}>
+      <Popup>
         <div>
-          このピンを削除しますか？
-          <button onClick={handleDelete}>削除</button>
-          <button onClick={handleCancel}>キャンセル</button>
+          <h2>このピンを削除しますか？</h2>
+          <Button variant="outlined" color="error" onClick={handleDelete}>削除</Button>
+          <Button variant="text" onClick={handleCancel}>キャンセル</Button>
         </div>
       </Popup>
     );
@@ -109,14 +100,14 @@ const EditPinComponent: React.FC<propIf> = ({pin, reload }) => {
 
   // 登録済みのピン押下後のポップアップ
   return (
-    <Popup ref={popupRef}>
+    <Popup>
       <div>
-        <h3>タイトル：{pin.title}</h3>
-        <p>説明：{pin.description}</p>
-        <p>カテゴリ：{pin.category}</p>
-        {pin.imageUrl && <img src={pin.imageUrl} alt={pin.title} style={{ maxWidth: '100px' }} />}
-        <button onClick={handleEditModeChange}>編集</button>
-        <button onClick={handleConfirmDeleteChange}>削除</button>
+        <h2>{pin.title}</h2>
+        <h4>{pin.description}</h4>
+        {pin.imageUrl && <img src={pin.imageUrl} alt={pin.title} style={{ maxWidth: '100px' }} />}<br />
+        <p>カテゴリ：<span>{pin.category}</span></p>
+        <Button variant="outlined" startIcon={<Edit />} onClick={handleEditModeChange}>編集</Button>
+        <IconButton  onClick={handleConfirmDeleteChange}><Delete /></IconButton>
       </div>
     </Popup>
   );

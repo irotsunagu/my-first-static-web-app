@@ -2,11 +2,13 @@ import { useState } from 'react';
 import { MapContainer, TileLayer, ZoomControl } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import { FetchAllPinsComponent } from './utils/FetchAllPinsComponent';
+import LocationOffIcon from '@mui/icons-material/LocationOff';
+import PinDropIcon from '@mui/icons-material/PinDrop';
+import { IconButton } from '@mui/material';
 
 // メインの関数
 function App() {
-  // メニュー情報
-  const [showMenu, setShowMenu] = useState(true);
+  // ピンを全部出すか出さないかの状態管理
   const [showMarker, setShowMarker] = useState(true);
   // 再レンダリング用の設定
   const [reloadState, setReloadState] = useState(true);
@@ -20,20 +22,14 @@ function App() {
       <div style={{position: 'absolute', left: '20px', top: '20px', zIndex: 1000, background: 'white', padding: '10px', fontWeight: 'bold', fontSize: '20px'}}>
         幻想マップsample
       </div>
-      {showMenu && (
-        <div style={{position: 'absolute', left: '20px', bottom: '20px', zIndex: 1000, background: 'white', padding: '10px', display: 'flex', flexDirection: 'column', gap: '10px'}}>
-          <button onClick={() => setShowMarker(!showMarker)}>{showMarker ? 'ピンを隠す' : 'ピンを表示'}</button>
-          <button onClick={() => setShowMenu(false)}>ー</button>
-        </div>
-      )}
-      {!showMenu && (
-        <button style={{position: 'absolute', left: '20px', bottom: '20px', zIndex: 1000}} onClick={() => setShowMenu(true)}>メニュー</button>
-      )}
+      <div style={{position: 'absolute', left: '10px', bottom: '10px', zIndex: 1000, background: 'white', padding: '5px', display: 'flex', flexDirection: 'column', gap: '10px'}}>
+        <IconButton onClick={() => setShowMarker(!showMarker)}>{showMarker ? <LocationOffIcon sx={{ color: 'blue' }} /> : <PinDropIcon sx={{ color: 'blue' }} />}</IconButton>
+      </div>
     <MapContainer center={[35.6895, 139.6917]} zoom={15} style={{ height: '100vh', width: '100%'}} zoomControl={false}>
       <TileLayer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        <FetchAllPinsComponent reloadState={reloadState} reload={handleUpdate} />
+        <FetchAllPinsComponent showMarker={showMarker} reloadState={reloadState} reload={handleUpdate} />
         <ZoomControl position="topright" />
     </MapContainer>
     </div>

@@ -1,8 +1,10 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { useMapEvents, Marker, Popup } from 'react-leaflet';
 import L, { LatLng } from 'leaflet';
+import React, { useEffect, useRef, useState } from 'react';
+import { Marker, Popup, useMapEvents } from 'react-leaflet';
 import PinData from '../models/PinData';
 import { addPin } from '../services/PinApi';
+import customMarkerIcon from '../components/customMarkerIcon';
+import { Button, TextField } from '@mui/material';
 
 // idのsetterをPropsで受け取るための定義
 interface propIf {
@@ -25,6 +27,13 @@ export const AddPinComponent: React.FC<propIf> = ({ reload }) => {
   // マーカーへの参照
   const markerRef = useRef<L.Marker | null>(null);
 
+  // クリックにより位置情報を取得
+  useMapEvents({
+    click(e) {
+      setPosition(e.latlng);
+    },
+  });
+
   // マーカーがレンダリングされた後にポップアップを開くための参照を定義
   useEffect(() => {
     if (markerRef.current) {
@@ -32,12 +41,13 @@ export const AddPinComponent: React.FC<propIf> = ({ reload }) => {
     }
   }, [position]);
 
-  // クリックにより位置情報を取得
-  useMapEvents({
-    click(e) {
-      setPosition(e.latlng);
-    },
-  });
+  // キャンセルボタン押下後の処理
+  const handleCancel = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+    // 初期化
+    setPosition(null); // フォームを閉じる
+    setPin({ id: "", title: "", description: "", latitude: 0, longitude: 0, category: "", imageUrl: "" })
+  }
 
   // 登録APIを呼び出すための処理
   const handleSave = async () => {
@@ -71,24 +81,16 @@ export const AddPinComponent: React.FC<propIf> = ({ reload }) => {
   // positionがnullでない場合（＝クリックしてpositionに何かしら値が入った状態）、ピンとポップアップを返す
   return position === null ? null : (
     <>
-      <Marker position={position} icon={new L.Icon({
-        iconUrl: require('leaflet/dist/images/marker-icon.png'),
-        iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
-        shadowUrl: require('leaflet/dist/images/marker-shadow.png'),
-        iconSize: [25, 41],
-        iconAnchor: [12, 41],
-        popupAnchor: [1, -34],
-        shadowSize: [41, 41]
-      })}
-        ref={markerRef} // MarkerにRefを設定
+      <Marker position={position} icon={customMarkerIcon} ref={markerRef} // MarkerにRefを設定
       >
         <Popup>
           <div>
-            <label>タイトル:<input type="text" value={pin.title} onChange={(e) => setPin({ ...pin, title: e.target.value })} /></label><br />
-            <label>説明:<textarea value={pin.description} onChange={(e) => setPin({ ...pin, description: e.target.value })} /></label><br />
-            <label>カテゴリ:<input type="text" value={pin.category} onChange={(e) => setPin({ ...pin, category: e.target.value })} /></label><br />
-            <label>画像URL:<input type="text" value={pin.imageUrl} onChange={(e) => setPin({ ...pin, imageUrl: e.target.value })} /></label><br />
-            <button onClick={handleSave}>保存</button>
+            <label><TextField id="standard-basic" label="タイトル" variant="standard" value={pin.title} onChange={(e) => setPin({ ...pin, title: e.target.value })} /></label><br />
+            <label><TextField id="standard-multiline-flexible" label="説明" multiline maxRows={2} variant="standard" value={pin.description} onChange={(e) => setPin({ ...pin, description: e.target.value })} /></label><br />
+            <label><TextField id="standard-basic" label="カテゴリ" variant="standard" value={pin.category} onChange={(e) => setPin({ ...pin, category: e.target.value })} /></label><br />
+            <label><TextField id="standard-basic" label="画像URL" variant="standard" value={pin.imageUrl} onChange={(e) => setPin({ ...pin, imageUrl: e.target.value })} /></label><br />
+            <Button variant="outlined" color="success" onClick={handleSave}>保存</Button>
+            <Button variant="text" onClick={handleCancel}>キャンセル</Button>
           </div>
         </Popup>
       </Marker>

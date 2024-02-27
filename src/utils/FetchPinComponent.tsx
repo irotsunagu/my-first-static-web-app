@@ -3,10 +3,7 @@ import { Marker } from 'react-leaflet';
 import PinData from '../models/PinData';
 import { fetchPin } from '../services/PinApi';
 import EditPinComponent from './EditPinComponent'; 
-import L from 'leaflet';
-import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png';
-import markerIcon from 'leaflet/dist/images/marker-icon.png';
-import markerShadow from 'leaflet/dist/images/marker-shadow.png';
+import customMarkerIcon from '../components/customMarkerIcon';
 
 // idをPropsで受け取るための定義
 interface propIf {
@@ -16,13 +13,6 @@ interface propIf {
 
 export const FetchPinComponent: React.FC<propIf> = ({id, reload }) => {
   const [pin, setPin] = useState<PinData>();
-
-// デフォルトのマーカーアイコンを規定
-L.Icon.Default.mergeOptions({
-  iconRetinaUrl: markerIcon2x,
-  iconUrl: markerIcon,
-  shadowUrl: markerShadow,
-});
 
   // ピン情報の取得
   useEffect(() => {
@@ -36,7 +26,7 @@ L.Icon.Default.mergeOptions({
 
   // ピン情報をマッピングして返却する
   return (
-    <Marker key={id} position={[pin.latitude, pin.longitude]} >
+    <Marker key={id} position={[pin.latitude, pin.longitude]} icon={customMarkerIcon} >
       <EditPinComponent pin={pin} reload={reload} />
     </Marker>
   );
