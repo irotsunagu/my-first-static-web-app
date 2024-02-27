@@ -1,35 +1,18 @@
-import React, { useEffect, useState } from 'react';
-import { MapContainer, TileLayer, Marker, Popup, ZoomControl, useMapEvents } from 'react-leaflet';
+import { useState } from 'react';
+import { MapContainer, TileLayer, ZoomControl } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
-import L from 'leaflet';
-import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png';
-import markerIcon from 'leaflet/dist/images/marker-icon.png';
-import markerShadow from 'leaflet/dist/images/marker-shadow.png';
-import MarkerPopup from './lib/MarkerPopup'; 
-import {fetchPins,deletePin,updatePin} from './lib/PinApi'; 
-import PinData from './lib/PinData';
-import {AddPinComponent} from './lib/AddPinComponent'; 
-
-// デフォルトのマーカーアイコンを規定
-L.Icon.Default.mergeOptions({
-  iconRetinaUrl: markerIcon2x,
-  iconUrl: markerIcon,
-  shadowUrl: markerShadow,
-});
-
+import { FetchAllPinsComponent } from './utils/FetchAllPinsComponent';
 
 // メインの関数
 function App() {
-  // ピン情報
-  const [pins, setPins] = useState<PinData[]>([]);
   // メニュー情報
   const [showMenu, setShowMenu] = useState(true);
   const [showMarker, setShowMarker] = useState(true);
-
-  // ピン情報の取得
-  useEffect(() => {
-    fetchPins().then(setPins).catch(console.error);
-  }, []);
+  // 再レンダリング用の設定
+  const [reloadState, setReloadState] = useState(true);
+  const handleUpdate = () => {
+    setReloadState(prevTrigger => !prevTrigger); // stateの更新で再レンダリングをトリガー
+  };
 
   // レンダリング用に諸々の処理結果を含んだDOMを返却する
   return (
@@ -46,17 +29,12 @@ function App() {
       {!showMenu && (
         <button style={{position: 'absolute', left: '20px', bottom: '20px', zIndex: 1000}} onClick={() => setShowMenu(true)}>メニュー</button>
       )}
-    <MapContainer center={[35.6895, 139.6917]} zoom={13} style={{ height: '100vh', width: '100%' }}>
+    <MapContainer center={[35.6895, 139.6917]} zoom={15} style={{ height: '100vh', width: '100%'}} zoomControl={false}>
       <TileLayer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-      />
-      <AddPinComponent />
-      {pins.map(pin => (
-        <Marker           key={pin.id}
-          position={[pin.latitude, pin.longitude]} >
-          <MarkerPopup pin={pin} updatePin={updatePin} deletePin={deletePin} />
-        </Marker>
-      ))}
+        />
+        <FetchAllPinsComponent reloadState={reloadState} reload={handleUpdate} />
+        <ZoomControl position="topright" />
     </MapContainer>
     </div>
   );

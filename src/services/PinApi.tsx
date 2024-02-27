@@ -1,17 +1,29 @@
-import PinData from './PinData';
+import PinData from '../models/PinData';
 
 // 格納された全ピンデータを取得する関数
-export const fetchPins = async () => {
-  const response = await fetch('https://sampleapp.azurewebsites.net/');
+export const fetchAllPins = async () => {
+  const response = await fetch('https://assampleapp.azurewebsites.net/');
   if (!response.ok) {
     throw new Error('ピンの取得に失敗しました。');
   }
   return response.json();
 };
 
+// 指定したピンデータを取得する関数
+export const fetchPin = async (id: string) => {
+  const response = await fetch(`https://assampleapp.azurewebsites.net/${id}`, {
+    method: 'GET',
+  });
+  if (!response.ok) {
+    throw new Error('ピンの取得に失敗しました。');
+  }
+  const responseData: PinData = await response.json();
+  return responseData;
+};
+
 // 指定したピンデータを追加する関数
 export const addPin = async (pinData: Omit<PinData, 'id'>) => {
-  const response = await fetch('https://sampleapp.azurewebsites.net/', {
+  const response = await fetch('https://assampleapp.azurewebsites.net/', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -21,12 +33,13 @@ export const addPin = async (pinData: Omit<PinData, 'id'>) => {
   if (!response.ok) {
     throw new Error('ピンの追加に失敗しました。');
   }
-  return response.json();
+  const responseData: PinData = await response.json();
+  return responseData;
 };
 
 // 指定したピンを更新する関数
 export const updatePin = async (id: string, pinData: Omit<PinData, 'id'>) => {
-  const response = await fetch(`https://sampleapp.azurewebsites.net/${id}`, {
+  const response = await fetch(`https://assampleapp.azurewebsites.net/${id}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -36,12 +49,13 @@ export const updatePin = async (id: string, pinData: Omit<PinData, 'id'>) => {
   if (!response.ok) {
     throw new Error('ピンの更新に失敗しました。');
   }
-  return response.json();
+  const responseData: PinData = await response.json();
+  return responseData;
 };
 
 // 指定したピンを削除する関数
 export const deletePin = async (id: string) => {
-  const response = await fetch(`https://sampleapp.azurewebsites.net/${id}`, {
+  const response = await fetch(`https://assampleapp.azurewebsites.net/${id}`, {
     method: 'DELETE',
   });
   if (!response.ok) {
