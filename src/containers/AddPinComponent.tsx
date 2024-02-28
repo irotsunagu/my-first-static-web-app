@@ -3,14 +3,24 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Marker, Popup, useMapEvents } from 'react-leaflet';
 import PinData from '../models/PinData';
 import { addPin } from '../services/PinApi';
-import customMarkerIcon from '../components/customMarkerIcon';
+import customMarkerIcon from '../utils/customMarkerIcon';
 import { Button, TextField } from '@mui/material';
 
-// idのsetterをPropsで受け取るための定義
+/**
+ * propsの定義
+ */
 interface propIf {
   reload: () => void; // 明示的に関数の型を定義
 }
 
+/**
+ * ピンデータの登録
+ * 1. 押下した地図の座標を読み取る
+ * 2. 押下した場所のピンとポップアップを出力してピンの情報入力を促す
+ * 3. 入力された情報を基にピン情報を追加登録する
+ * @param reload 親コンポーネントのFetchAllPinsComponentを再レンダリングさせるためのstateのsetter
+ * @returns 追加するピン情報を記載するためのポップアップ
+ */
 export const AddPinComponent: React.FC<propIf> = ({ reload }) => {
   // ピン位置の状態保持
   const [position, setPosition] = useState<LatLng | null>(null);

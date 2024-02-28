@@ -7,13 +7,26 @@ import Edit from '@mui/icons-material/Edit';
 import Delete from '@mui/icons-material/Delete';
 import { IconButton, Button, TextField } from '@mui/material';
 
-// PinDataをPropsで受け取るための定義
+/**
+ * propsの定義
+ */
 interface propIf {
   pin: PinData;
   reload: () => void; // 明示的に関数の型を定義
 }
 
 // ピン情報の編集（削除含む）
+/**
+ * ピンデータの編集と削除
+ * 1. 選択したピンの情報をポップアップで表示する
+ * 2.a. 編集ボタン押下後は、ポップアップを出力してピンの情報入力を促す
+ * 3.a. 入力された情報を基にピン情報を更新する
+ * 2.b. 削除ボタン押下後は、ポップアップを出力して削除要否の確認を促す
+ * 3.b. ピン情報を削除する
+ * @param pin ピンのデータ
+ * @param reload 親コンポーネントのFetchAllPinsComponentを再レンダリングさせるためのstateのsetter
+ * @returns 参照/編集/削除のポップアップ
+ */
 const EditPinComponent: React.FC<propIf> = ({pin, reload }) => {
   // 編集モードか削除モードかの状態を管理
   const [editMode, setEditMode] = useState(false);

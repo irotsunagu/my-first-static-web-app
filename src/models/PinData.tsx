@@ -1,4 +1,6 @@
-// ピンのデータ型
+/**
+ * ピンのデータ情報の型
+ */
 interface PinData {
     id: string;
     title: string;

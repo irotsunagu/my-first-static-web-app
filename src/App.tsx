@@ -1,16 +1,19 @@
 import { useState } from 'react';
 import { MapContainer, TileLayer, ZoomControl } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
-import { FetchAllPinsComponent } from './utils/FetchAllPinsComponent';
+import { FetchAllPinsComponent } from './containers/FetchAllPinsComponent';
 import LocationOffIcon from '@mui/icons-material/LocationOff';
 import PinDropIcon from '@mui/icons-material/PinDrop';
 import { IconButton } from '@mui/material';
 
-// メインの関数
+/**
+ * メインのコンポーネント
+ * @returns 画面に表示するDOM
+ */
 function App() {
-  // ピンを全部出すか出さないかの状態管理
+  // ピンを全部出すか出さないかの状態管理state
   const [showMarker, setShowMarker] = useState(true);
-  // 再レンダリング用の設定
+  // 再レンダリング用の状態管理state
   const [reloadState, setReloadState] = useState(true);
   const handleUpdate = () => {
     setReloadState(prevTrigger => !prevTrigger); // stateの更新で再レンダリングをトリガー

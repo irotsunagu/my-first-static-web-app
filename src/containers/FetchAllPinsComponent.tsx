@@ -4,15 +4,23 @@ import PinData from '../models/PinData';
 import { fetchAllPins } from '../services/PinApi';
 import EditPinComponent from './EditPinComponent'; 
 import { AddPinComponent } from './AddPinComponent'; 
-import customMarkerIcon from '../components/customMarkerIcon';
+import customMarkerIcon from '../utils/customMarkerIcon';
 
-// idのsetterをPropsで受け取るための定義
+/**
+ * propsの定義
+ */
 interface propIf {
   showMarker: boolean;
   reloadState: boolean;
   reload: () => void; // 明示的に関数の型を定義
 }
 
+/**
+ * 全ピンのマーカーを返却する関数
+ * AddPinComonentおよびEditPinComponentの親コンポーネント
+ * @param reload 親コンポーネントのFetchAllPinsComponentを再レンダリングさせるためのstateのsetter
+ * @returns 全ピンのマーカー
+ */
 export const FetchAllPinsComponent: React.FC<propIf> = ( {showMarker, reloadState, reload }) => {
   const [pins, setPins] = useState<PinData[]>([]);
 

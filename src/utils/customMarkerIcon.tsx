@@ -1,6 +1,8 @@
 import L from 'leaflet';
 
-// ピンのアイコンの見た目を規定する
+/**
+ * ピンのアイコンの見た目を規定
+ */
 const customMarkerIcon = new L.Icon({
   iconUrl: require('leaflet/dist/images/marker-icon.png'),
   iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
