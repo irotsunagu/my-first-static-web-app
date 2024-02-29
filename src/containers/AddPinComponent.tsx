@@ -5,6 +5,10 @@ import PinData from '../models/PinData';
 import { addPin } from '../services/PinApi';
 import customMarkerIcon from '../utils/customMarkerIcon';
 import { Button, TextField } from '@mui/material';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
 
 /**
  * propsの定義
@@ -91,19 +95,35 @@ export const AddPinComponent: React.FC<propIf> = ({ reload }) => {
   // positionがnullでない場合（＝クリックしてpositionに何かしら値が入った状態）、ピンとポップアップを返す
   return position === null ? null : (
     <>
-      <Marker position={position} icon={customMarkerIcon} ref={markerRef} // MarkerにRefを設定
+      <Marker position={position}
+        icon={customMarkerIcon[pin.category] || customMarkerIcon.default} 
+        ref={markerRef} // MarkerにRefを設定
       >
         <Popup>
           <div>
             <label><TextField id="standard-basic" label="タイトル" variant="standard" value={pin.title} onChange={(e) => setPin({ ...pin, title: e.target.value })} /></label><br />
             <label><TextField id="standard-multiline-flexible" label="説明" multiline maxRows={2} variant="standard" value={pin.description} onChange={(e) => setPin({ ...pin, description: e.target.value })} /></label><br />
-            <label><TextField id="standard-basic" label="カテゴリ" variant="standard" value={pin.category} onChange={(e) => setPin({ ...pin, category: e.target.value })} /></label><br />
+            <FormControl fullWidth>
+              <InputLabel id="simple-select-label">カテゴリ</InputLabel>
+              <Select
+                labelId="simple-select-label"
+                id="simple-select"
+                value={pin.category}
+                label="Category"
+                onChange={(e) => setPin({ ...pin, category: e.target.value })}
+              >
+                <MenuItem value={"Hero"}>Hero</MenuItem>
+                <MenuItem value={"Chest"}>Chest</MenuItem>
+                <MenuItem value={"Boss"}>Boss</MenuItem>
+                <MenuItem value={"Last"}>Last</MenuItem>
+              </Select>
+            </FormControl>
             <label><TextField id="standard-basic" label="画像URL" variant="standard" value={pin.imageUrl} onChange={(e) => setPin({ ...pin, imageUrl: e.target.value })} /></label><br />
-            <Button variant="outlined" color="success" onClick={handleSave}>保存</Button>
-            <Button variant="text" onClick={handleCancel}>キャンセル</Button>
+            <Button variant="outlined" color="success" onClick={handleSave}>Save</Button>
+            <Button variant="text" onClick={handleCancel}>Cancel</Button>
           </div>
         </Popup>
       </Marker>
-    </>
+    </> 
   );
 }

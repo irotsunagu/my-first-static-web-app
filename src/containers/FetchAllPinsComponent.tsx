@@ -35,7 +35,8 @@ export const FetchAllPinsComponent: React.FC<propIf> = ( {showMarker, reloadStat
     <>
       <AddPinComponent reload={reload} />
       {pins.map(pin => (
-        <Marker key={pin.id} position={[pin.latitude, pin.longitude]} icon={customMarkerIcon}>
+        <Marker key={pin.id} position={[pin.latitude, pin.longitude]} 
+          icon={customMarkerIcon[pin.category] || customMarkerIcon.default}>
           <EditPinComponent pin={pin}  reload={reload} />
         </Marker>
       ))}

@@ -34,7 +34,8 @@ export const FetchPinComponent: React.FC<propIf> = ({id, reload }) => {
 
   // ピン情報をマッピングして返却する
   return (
-    <Marker key={id} position={[pin.latitude, pin.longitude]} icon={customMarkerIcon} >
+    <Marker key={id} position={[pin.latitude, pin.longitude]}
+          icon={customMarkerIcon[pin.category] || customMarkerIcon.default}>
       <EditPinComponent pin={pin} reload={reload} />
     </Marker>
   );

@@ -37,3 +37,29 @@
     transform: rotate(360deg);
   }
 }
+
+.popup-content {
+  font-family: 'Hiragino Mincho Pro', 'Hiragino Mincho ProN', 'MS PMincho', 'MS Mincho', serif;
+  background: #f9f9f9; /* 軽いグレーの背景 */
+  border-radius: 8px; /* 角の丸み */
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15); /* ソフトな影 */
+  padding: 15px; /* 内側の余白 */
+  max-width: 250px; /* ポップアップの最大幅 */
+}
+
+.popup-content h2 {
+  color: #333; /* タイトルの色 */
+  margin: 0 0 10px 0; /* 下の余白 */
+}
+
+.popup-content h4 {
+  color: #666; /* 説明文の色 */
+  margin: 0 0 15px 0; /* 下の余白 */
+}
+
+.popup-content img {
+  display: block; /* 画像の表示 */
+  margin: 0 auto 15px; /* 下の余白と中央揃え */
+  border-radius: 4px; /* 画像の角の丸み */
+}
+
