@@ -13,6 +13,9 @@ interface CategoryIconMap {
   Last: Icon<IconOptions>;
   default: Icon<IconOptions>;
 }
+const IconSize:[number,number] = [91, 101];
+const IconAnchor:[number,number]= [12, 41];
+const PopupAnchor:[number,number]= [1, -34]; 
 
 /**
  * ピンのアイコンの見た目を規定
@@ -20,27 +23,27 @@ interface CategoryIconMap {
 const customMarkerIcon:CategoryIconMap = {
   Hero: L.icon({
     iconUrl: Hero,
-    iconSize: [41, 51], 
-    iconAnchor: [12, 41], 
-    popupAnchor: [1, -34], 
+    iconSize: IconSize, 
+    iconAnchor: IconAnchor, 
+    popupAnchor: PopupAnchor,
   }),
   Boss: L.icon({
     iconUrl: Boss,
-    iconSize: [41, 51],
-    iconAnchor: [12, 41],
-    popupAnchor: [1, -34],
+    iconSize: IconSize, 
+    iconAnchor: IconAnchor, 
+    popupAnchor: PopupAnchor,
   }),
   Chest: L.icon({
     iconUrl: Chest,
-    iconSize: [41, 51],
-    iconAnchor: [12, 41],
-    popupAnchor: [1, -34],
+    iconSize: IconSize, 
+    iconAnchor: IconAnchor, 
+    popupAnchor: PopupAnchor,
   }),
   Last: L.icon({
     iconUrl: Last,
-    iconSize: [41, 51],
-    iconAnchor: [12, 41],
-    popupAnchor: [1, -34],
+    iconSize: IconSize, 
+    iconAnchor: IconAnchor, 
+    popupAnchor: PopupAnchor,
   }),
   default: L.icon({
   iconUrl: require('leaflet/dist/images/marker-icon.png'),
