@@ -38,22 +38,42 @@
   }
 }
 
+@import url('https://fonts.googleapis.com/earlyaccess/nikukyu.css');
+@import url('https://fonts.googleapis.com/earlyaccess/nicomoji.css');
+
+
 .popup-content {
-  font-family: 'Hiragino Mincho Pro', 'Hiragino Mincho ProN', 'MS PMincho', 'MS Mincho', serif;
-  background: #f9f9f9; /* 軽いグレーの背景 */
+  font-family: 'Nico Moji',wf-nicomoji;
+  background-color: #f1c5e9; /* ベースのピンク色 */
+  background-image: 
+    linear-gradient(135deg, rgba(255, 255, 255, 0.25) 25%, transparent 25%),
+    linear-gradient(225deg, rgba(255, 255, 255, 0.25) 25%, transparent 25%),
+    linear-gradient(45deg, rgba(255, 255, 255, 0.25) 25%, transparent 25%),
+    linear-gradient(315deg, rgba(255, 255, 255, 0.25) 25%, transparent 25%);
+  background-position:
+    0 0, 
+    0 0, 
+    20px 20px, 
+    20px 20px;
+  background-size: 40px 40px;
+  background-repeat: repeat;
+  overflow: hidden;
   border-radius: 8px; /* 角の丸み */
   box-shadow: 0 2px 8px rgba(0,0,0,0.15); /* ソフトな影 */
   padding: 15px; /* 内側の余白 */
-  max-width: 250px; /* ポップアップの最大幅 */
+  width: 200px; /* ポップアップの最大幅 */
 }
 
 .popup-content h2 {
-  color: #333; /* タイトルの色 */
+  /* font-family: 'Nikukyu',wf-nikukyu; */
+  color: #f93c1f; /* タイトルの色 */
+  font-size: x-large;
   margin: 0 0 10px 0; /* 下の余白 */
 }
 
 .popup-content h4 {
-  color: #666; /* 説明文の色 */
+  color: #fc5908; /* 説明文の色 */
+  font-size: medium;
   margin: 0 0 15px 0; /* 下の余白 */
 }
 

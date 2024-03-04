@@ -1,46 +1,57 @@
 import L, { Icon, IconOptions } from 'leaflet';
-import Boss from '../assets/boss.png';
-import Hero from '../assets/hero.png';
-import Chest from '../assets/chest.png';
-import Last from '../assets/last.png';
+import accessories from '../assets/accessories.png';
+import cake from '../assets/cake.png';
+import fashion from '../assets/fashion.png';
+import restaurant from '../assets/restaurant.png';
+import sweets from '../assets/sweets.png';
 
 // インデックスシグネチャを持つオブジェクトの型定義
 interface CategoryIconMap {
   [key: string]: Icon<IconOptions>;
-  Hero: Icon<IconOptions>;
-  Boss: Icon<IconOptions>;
-  Chest: Icon<IconOptions>;
-  Last: Icon<IconOptions>;
+  cake: Icon<IconOptions>;
+  accessories: Icon<IconOptions>;
+  fashion: Icon<IconOptions>;
+  restaurant: Icon<IconOptions>;
   default: Icon<IconOptions>;
 }
 
 /**
  * ピンのアイコンの見た目を規定
  */
+const IconSize:[number,number] = [91, 101];
+const IconAnchor:[number,number]= [12, 41];
+const PopupAnchor:[number,number]= [1, -34]; 
+
 const customMarkerIcon:CategoryIconMap = {
-  Hero: L.icon({
-    iconUrl: Hero,
-    iconSize: [41, 51], 
-    iconAnchor: [12, 41], 
-    popupAnchor: [1, -34], 
+  cake: L.icon({
+    iconUrl: cake,
+    iconSize: IconSize, 
+    iconAnchor: IconAnchor, 
+    popupAnchor: PopupAnchor,
   }),
-  Boss: L.icon({
-    iconUrl: Boss,
-    iconSize: [41, 51],
-    iconAnchor: [12, 41],
-    popupAnchor: [1, -34],
+  accessories: L.icon({
+    iconUrl: accessories,
+    iconSize: IconSize, 
+    iconAnchor: IconAnchor, 
+    popupAnchor: PopupAnchor,
   }),
-  Chest: L.icon({
-    iconUrl: Chest,
-    iconSize: [41, 51],
-    iconAnchor: [12, 41],
-    popupAnchor: [1, -34],
+  fashion: L.icon({
+    iconUrl: fashion,
+    iconSize: IconSize, 
+    iconAnchor: IconAnchor, 
+    popupAnchor: PopupAnchor,
   }),
-  Last: L.icon({
-    iconUrl: Last,
-    iconSize: [41, 51],
-    iconAnchor: [12, 41],
-    popupAnchor: [1, -34],
+  restaurant: L.icon({
+    iconUrl: restaurant,
+    iconSize: IconSize, 
+    iconAnchor: IconAnchor, 
+    popupAnchor: PopupAnchor,
+  }),
+  sweets: L.icon({
+    iconUrl: sweets,
+    iconSize: IconSize, 
+    iconAnchor: IconAnchor, 
+    popupAnchor: PopupAnchor,
   }),
   default: L.icon({
   iconUrl: require('leaflet/dist/images/marker-icon.png'),
