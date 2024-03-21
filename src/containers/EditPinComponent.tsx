@@ -103,10 +103,11 @@ const EditPinComponent: React.FC<propIf> = ({pin, reload }) => {
               label="Category"
               onChange={(e) => setEditCategory(e.target.value)}
             >
-              <MenuItem value={"Hero"}>Hero</MenuItem>
-              <MenuItem value={"Chest"}>Chest</MenuItem>
-              <MenuItem value={"Boss"}>Boss</MenuItem>
-              <MenuItem value={"Last"}>Last</MenuItem>
+              <MenuItem value={"accessories"}>ざっかやさん</MenuItem>
+              <MenuItem value={"cake"}>けーきやさん</MenuItem>
+              <MenuItem value={"fashion"}>ようふくやさん</MenuItem>
+              <MenuItem value={"restaurant"}>れすとらん</MenuItem>
+              <MenuItem value={"sweets"}>おかしやさん</MenuItem>
             </Select>
           </FormControl>
           <label><TextField id="standard-basic" label="画像URL" variant="standard" value={editImageUrl} onChange={(e) => setEditImageUrl(e.target.value)} /></label><br/><br/>
@@ -138,7 +139,7 @@ const EditPinComponent: React.FC<propIf> = ({pin, reload }) => {
         <h4>{pin.description}</h4>
         {pin.imageUrl && <img src={pin.imageUrl} alt={pin.title} style={{ maxWidth: '100px' }} />}<br />
         <Button variant="outlined" startIcon={<Edit />} onClick={handleEditModeChange}>Edit</Button>
-        <IconButton  onClick={handleConfirmDeleteChange}><Delete /></IconButton>
+        <IconButton onClick={handleConfirmDeleteChange}><Delete /></IconButton>
       </div>
     </Popup>
   );

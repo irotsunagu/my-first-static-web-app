@@ -26,9 +26,9 @@ function App() {
       <div style={{position: 'absolute', left: '20px', top: '20px', zIndex: 1000, padding: '10px', fontWeight: 'bold', fontSize: '20px'}}>
         <img src={titleImg} alt="title" style={{ width: '200px', height: 'auto', fontWeight: 'bold', fontSize: '20px'}} />
       </div>
-      <div style={{position: 'absolute', left: '10px', bottom: '12px', zIndex: 1000, background: 'white', padding: '5px', display: 'flex', flexDirection: 'column', gap: '10px'}}>
+      {/* <div style={{position: 'absolute', left: '10px', bottom: '12px', zIndex: 1000, background: 'white', padding: '5px', display: 'flex', flexDirection: 'column', gap: '10px'}}>
         <IconButton onClick={() => setShowMarker(!showMarker)}>{showMarker ? <LocationOffIcon sx={{ color: 'blue' }} /> : <PinDropIcon sx={{ color: 'blue' }} />}</IconButton>
-      </div>
+      </div> */}
     <MapContainer center={[34.387878, 134.830749]} zoom={11.2} style={{ height: '100vh', width: '100%'}} zoomControl={false}>
       <TileLayer
         url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
