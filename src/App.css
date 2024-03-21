@@ -61,19 +61,19 @@
   border-radius: 8px; /* 角の丸み */
   box-shadow: 0 2px 8px rgba(0,0,0,0.15); /* ソフトな影 */
   padding: 15px; /* 内側の余白 */
-  width: 200px; /* ポップアップの最大幅 */
+  width: 280px; /* ポップアップの最大幅 */
 }
 
 .popup-content h2 {
   /* font-family: 'Nikukyu',wf-nikukyu; */
   color: #f93c1f; /* タイトルの色 */
-  font-size: x-large;
+  font-size: xx-large;
   margin: 0 0 10px 0; /* 下の余白 */
 }
 
 .popup-content h4 {
   color: #fc5908; /* 説明文の色 */
-  font-size: medium;
+  font-size: x-large;
   margin: 0 0 15px 0; /* 下の余白 */
 }
 
