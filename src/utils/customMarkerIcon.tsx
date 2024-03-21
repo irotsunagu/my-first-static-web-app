@@ -13,6 +13,9 @@ interface CategoryIconMap {
   Last: Icon<IconOptions>;
   default: Icon<IconOptions>;
 }
+const IconSize:[number,number] = [91, 101];
+const IconAnchor:[number,number]= [12, 41];
+const PopupAnchor:[number,number]= [1, -34]; 
 
 /**
  * ピンのアイコンの見た目を規定
@@ -27,9 +30,15 @@ const customMarkerIcon:CategoryIconMap = {
     iconSize: IconSize, 
     iconAnchor: IconAnchor, 
     popupAnchor: PopupAnchor,
+    iconSize: IconSize, 
+    iconAnchor: IconAnchor, 
+    popupAnchor: PopupAnchor,
   }),
   Boss: L.icon({
     iconUrl: Boss,
+    iconSize: IconSize, 
+    iconAnchor: IconAnchor, 
+    popupAnchor: PopupAnchor,
     iconSize: IconSize, 
     iconAnchor: IconAnchor, 
     popupAnchor: PopupAnchor,
@@ -42,6 +51,9 @@ const customMarkerIcon:CategoryIconMap = {
   }),
   Last: L.icon({
     iconUrl: Last,
+    iconSize: IconSize, 
+    iconAnchor: IconAnchor, 
+    popupAnchor: PopupAnchor,
     iconSize: IconSize, 
     iconAnchor: IconAnchor, 
     popupAnchor: PopupAnchor,
