@@ -23,7 +23,7 @@ function App() {
   return (
     <div>
       <div style={{position: 'absolute', left: '20px', top: '20px', zIndex: 1000, background: 'white', padding: '10px', fontWeight: 'bold', fontSize: '20px'}}>
-        幻想マップsample
+       思い出マップ
       </div>
       <div style={{position: 'absolute', left: '10px', bottom: '10px', zIndex: 1000, background: 'white', padding: '5px', display: 'flex', flexDirection: 'column', gap: '10px'}}>
         <IconButton onClick={() => setShowMarker(!showMarker)}>{showMarker ? <LocationOffIcon sx={{ color: 'blue' }} /> : <PinDropIcon sx={{ color: 'blue' }} />}</IconButton>
